@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href = "docs/style.css">
+    <link rel="stylesheet" href = "style.css">
     <script src="https://cjrtnc.leaningtech.com/5.0/loader.js"></script>
 </head>
 <body>
     <script type = "module">
         await cheerpjInit({version: 17});
         cheerpjCreateDisplay(800,600);
-        // await cheerpjRunJar("/app/SustainabilityScramble.jar"); // For local deployment
-        await cheerpjRunJar("/app/sustainability-scramble/SustainabilityScramble.jar"); // For Github deployment
+        const base = location.pathname.replace(/[^/]*$/, "");
+        await cheerpjRunJar("/app" + base + "SustainabilityScramble.jar");
     </script>
 </body>
 </html>
