@@ -1,6 +1,11 @@
 
 import java.util.*;
+import java.util.stream.Collectors;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
 
 public class WordBank {
@@ -16,12 +21,17 @@ public class WordBank {
     public void readWords(Theme theme) {
         
         List<String> lines;
-        try {
-            lines = Files.readAllLines(Paths.get("src/themes/" + theme + ".txt"));
-        } catch (IOException f) {
-            throw (new IllegalArgumentException());
+        String path = "/themes/" + theme + ".txt";
+        try (InputStream in = getClass().getResourceAsStream(path)) {
+            if (in == null) {
+                throw new IllegalArgumentException();
+            }
+            BufferedReader reader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8));
+            lines = reader.lines().collect(Collectors.toList());
+        } catch (IOException e) {
+            throw new IllegalArgumentException();
         }
-        
+
         for (String word : lines) {
             wordBank.add(word);
         }
@@ -38,7 +48,7 @@ public class WordBank {
         StringBuilder scrambledPhrase = new StringBuilder();        // The scrambled version of the phrase
 
         String[] splitPhrase = phrase.split(" ");            // Split the phrase into its component words
-        
+
         for (int i = 0; i < splitPhrase.length; i++) {
             
             StringBuilder word = new StringBuilder(splitPhrase[i]); // Get the current word in the unscrambled phrase

@@ -48,19 +48,19 @@ public class SustainabilityScramble {
     }
     private void createNorthPanel() {
         north.setPreferredSize(new Dimension(window.getWidth(), 50));
-        north.setBackground(Color.RED);
+        north.setBackground(new Color(Colors.BRIGHT_PURPLE));
     }
     private void createSouthPanel() {
         south.setPreferredSize(new Dimension(window.getWidth(), 50));
-        south.setBackground(Color.RED);
+        south.setBackground(new Color(Colors.BRIGHT_PURPLE));
     }
     private void createEastPanel() {
         east.setPreferredSize(new Dimension(50, window.getHeight()));
-        east.setBackground(Color.BLUE);
+        east.setBackground(new Color(Colors.BRIGHT_PURPLE));
     }
     private void createWestPanel() {
         west.setPreferredSize(new Dimension(50, window.getHeight()));
-        west.setBackground(Color.BLUE);
+        west.setBackground(new Color(Colors.BRIGHT_PURPLE));
     }
     
     private void addPanels() {
