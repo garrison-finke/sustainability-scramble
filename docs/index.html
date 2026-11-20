@@ -8,9 +8,13 @@
 </head>
 <body>
     <script type = "module">
+        // The game is built in Java 17 in order to work with CheerpJ
         await cheerpjInit({version: 17});
+        // Set the CheerpJ display's dimensions in the webpage
         cheerpjCreateDisplay(800,600);
-        const base = location.pathname.replace(/[^/]*$/, "");
+        // Find the game's .jar file whether working in VSCode or deploying from Github pages
+        const base = location.pathname.split('/').slice(0, -1).join('/') + '/'; 
+        // Run the .jar in the CheerpJ display
         await cheerpjRunJar("/app" + base + "SustainabilityScramble.jar");
     </script>
 </body>

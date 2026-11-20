@@ -1,15 +1,15 @@
 import javax.swing.JButton;
 
-public class MyButton extends JButton {
+public class SelectorButton extends JButton {
     
-    private boolean selected = false;
+    private boolean selected = false; // Whether the option associated with the button is selected or not
     
-    public MyButton(String text) {
-
-        super(text);
+    public SelectorButton() {
+        super();
         this.setFocusable(false);
     }
     
+    // 
     public void setSelected(boolean selected) {
         this.selected = selected;
         if (!selected) {
@@ -18,11 +18,6 @@ public class MyButton extends JButton {
     }
     
     public boolean isSelected() {
-        
-        if (selected) {
-            return true;
-        }
-        
-        return false;
+        return selected;
     }
 }
