@@ -19,10 +19,10 @@ public class WordBank {
     
     public void readWords(Theme theme) {
         List<String> lines;
-        String path = "/themes/" + theme + ".txt";
+        String path = "/assets/themes/" + theme + ".txt";
         try (InputStream in = getClass().getResourceAsStream(path)) {
             if (in == null) {
-                throw new IllegalArgumentException();
+                throw new IllegalArgumentException(path);
             }
             BufferedReader reader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8));
             lines = reader.lines().collect(Collectors.toList());
