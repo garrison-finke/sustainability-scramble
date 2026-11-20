@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.*;
 
 public class WordBank {
     
@@ -19,7 +18,6 @@ public class WordBank {
     }
     
     public void readWords(Theme theme) {
-        
         List<String> lines;
         String path = "/themes/" + theme + ".txt";
         try (InputStream in = getClass().getResourceAsStream(path)) {
