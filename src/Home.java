@@ -16,14 +16,16 @@ public class Home {
 	private JPanel home7;             // The seventh row in the center panel
 	private SelectorButton survival;  // Survival mode selector button
 	private SelectorButton timed;     // Timed mode selector button
-	private JLabel mode;              // Description of selected mode
+	private JLabel modeLabel;         // Description of selected mode
 	private SelectorButton easy;      // Easy mode selector button
 	private SelectorButton medium;    // Medium mode selector button
 	private SelectorButton hard;      // Hard mode selector button
-	private JLabel difficulty;        // Description of selected difficulty
+	private JLabel difficultyLabel;   // Description of selected difficulty
 	private JComboBox<String> themes; // The dropdown menu for selecting the theme
 	private JButton start;            // The start button
 	private JButton credits;          // The credits button
+    private Mode mode;                // The selected mode
+    private Difficulty difficulty;    // The selected difficulty
 	
     // Constructor
 	public Home(JFrame window, JPanel center) {
@@ -38,11 +40,11 @@ public class Home {
         home7 = new JPanel();
         survival = new SelectorButton();
         timed = new SelectorButton();
-        mode = new JLabel();
+        modeLabel = new JLabel();
         easy = new SelectorButton();
         medium = new SelectorButton(); 
         hard = new SelectorButton();       
-        difficulty = new JLabel();
+        difficultyLabel = new JLabel();
         themes = new JComboBox<String>();
         start = new JButton();
         credits = new JButton();
@@ -92,6 +94,7 @@ public class Home {
     	// Survival button is clicked
         survival.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                mode = Mode.SURVIVAL;
                 survival.setSelected(true);
                 timed.setSelected(false);  // De-select other mode
                 easy.setEnabled(true);            // If a mode is selected, the difficulty options become enabled
@@ -100,7 +103,7 @@ public class Home {
                 easy.setSelected(false);   // If the selected mode is changed, the selected difficulty option is cleared
                 medium.setSelected(false);
                 hard.setSelected(false);
-                difficulty.setText("");        // Since the difficulty option has been cleared, remove the text associated with it
+                difficultyLabel.setText("");   // Since the difficulty option has been cleared, remove the text associated with it
                 start.setEnabled(false);          // Since the difficulty option has been cleared, the start option becomes disabled
             }
         });
@@ -110,15 +113,15 @@ public class Home {
             // Cursor enters Survival button
             public void mouseEntered(MouseEvent evt) {
                 survival.setBackground(Color.CYAN); // Button color changes
-                previous = mode.getText();          // The text in the panel below the button will revert if the mouse stops hovering over the button without selecting it
-                mode.setText("Solve as many jumbles as you can before running out of lives");
+                previous = modeLabel.getText();          // The text in the panel below the button will revert if the mouse stops hovering over the button without selecting it
+                modeLabel.setText("Solve as many scrambles as you can before running out of lives");
             }
             
             // Cursor exits Survival button
             public void mouseExited(MouseEvent evt) {
                 if (!survival.isSelected()) {
                     survival.setBackground(null); // Remove color from button if it is not selected and not being hovered over
-                    mode.setText(previous);           // Revert the text in the panel below the button to the previous text if it is not being hovered over
+                    modeLabel.setText(previous);      // Revert the text in the panel below the button to the previous text if it is not being hovered over
                 }
             }
         });
@@ -132,6 +135,7 @@ public class Home {
     	// Timed button is clicked
         timed.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                mode = Mode.TIMED;
                 timed.setSelected(true);
                 survival.setSelected(false); // De-select other mode
                 easy.setEnabled(true);              // If a mode is selected, the difficulty options become enabled
@@ -140,7 +144,7 @@ public class Home {
                 easy.setSelected(false);     // If the selected mode is changed, the selected difficulty option is cleared
                 medium.setSelected(false);
                 hard.setSelected(false);
-                difficulty.setText("");          // Since the difficulty option has been cleared, remove the text associated with it
+                difficultyLabel.setText("");     // Since the difficulty option has been cleared, remove the text associated with it
                 start.setEnabled(false);            // Since the difficulty option has been cleared, the start option becomes disabled
             }
         });
@@ -152,15 +156,15 @@ public class Home {
             // Cursor enters Timed button
             public void mouseEntered(MouseEvent evt) {
                 timed.setBackground(Color.ORANGE); // Button color changes
-                previous = mode.getText();         // The text in the panel below the button will revert if the mouse stops hovering over the button without selecting it
-                mode.setText("Solve a set number of jumbles as fast as you can");
+                previous = modeLabel.getText();         // The text in the panel below the button will revert if the mouse stops hovering over the button without selecting it
+                modeLabel.setText("Solve a set number of scrambles as fast as you can");
             }
             
             // Cursor exits Timed button
             public void mouseExited(MouseEvent evt) {
                 if (!timed.isSelected()) {
                     timed.setBackground(null); // Remove color from button if it is not selected and not being hovered over
-                    mode.setText(previous);        // Revert the text in the panel below the button to the previous text if it is not being hovered over
+                    modeLabel.setText(previous);        // Revert the text in the panel below the button to the previous text if it is not being hovered over
                 }
             }
         }); 
@@ -170,7 +174,7 @@ public class Home {
     
     // Add description of selected mode to one row of the home screen. Blank until mode selected
     private void addModeDescription(JPanel panel) {
-        panel.add(mode);
+        panel.add(modeLabel);
     }
     
     // Add easy, medium, and hard difficulty selector buttons to one row of the home screen
@@ -187,6 +191,7 @@ public class Home {
     	// Easy button is clicked
         easy.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                difficulty = Difficulty.EASY;
                 easy.setSelected(true);    // Ensure that the other two difficulties are de-selected
                 medium.setSelected(false); 
                 hard.setSelected(false);
@@ -205,13 +210,13 @@ public class Home {
                     easy.setBackground(Color.GREEN);         // Button color changes
                 }
                 
-                previous = difficulty.getText();             // The text in the panel below the button will revert if the mouse stops hovering over the button without selecting it
+                previous = difficultyLabel.getText();             // The text in the panel below the button will revert if the mouse stops hovering over the button without selecting it
                 if (survival.isSelected()) {
-                    difficulty.setText("Five Lives");  // Text assigned to panel below the button depends on the selected mode
+                    difficultyLabel.setText("Five Lives");  // Text assigned to panel below the button depends on the selected mode
                 }
                 
                 if (timed.isSelected()) {
-                    difficulty.setText("Five Jumbles");
+                    difficultyLabel.setText("Five Jumbles");
                 }
             }
             
@@ -219,7 +224,7 @@ public class Home {
             public void mouseExited(MouseEvent evt) {
                 if (!easy.isSelected()) {
                     easy.setBackground(null); // Remove color from button if it is not selected and not being hovered over
-                    difficulty.setText(previous); // Revert the text in the panel below the button to the previous text if it is not being hovered over
+                    difficultyLabel.setText(previous); // Revert the text in the panel below the button to the previous text if it is not being hovered over
                 }
             }
         });    
@@ -235,6 +240,7 @@ public class Home {
     	// Medium button is clicked
         medium.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                difficulty = Difficulty.MEDIUM;
                 easy.setSelected(false); // Ensure that the other two difficulties are de-selected
                 medium.setSelected(true);
                 hard.setSelected(false);
@@ -253,13 +259,13 @@ public class Home {
                     medium.setBackground(Color.YELLOW); // Button color changes
                 }
                 
-                previous = difficulty.getText(); // The text in the panel below the button will revert if the mouse stops hovering over the button without selecting it
+                previous = difficultyLabel.getText(); // The text in the panel below the button will revert if the mouse stops hovering over the button without selecting it
                 if (survival.isSelected()) {
-                    difficulty.setText("Three Lives"); // Text assigned to panel below the button depends on the selected mode
+                    difficultyLabel.setText("Three Lives"); // Text assigned to panel below the button depends on the selected mode
                 }
                 
                 if (timed.isSelected()) {
-                    difficulty.setText("Ten Jumbles");
+                    difficultyLabel.setText("Ten Jumbles");
                 }
             }
             
@@ -267,7 +273,7 @@ public class Home {
             public void mouseExited(MouseEvent evt) {
                 if (!medium.isSelected()) {
                     medium.setBackground(null); // Remove color from button if it is not selected and not being hovered over
-                    difficulty.setText(previous); // Revert the text in the panel below the button to the previous text if it is not being hovered over
+                    difficultyLabel.setText(previous); // Revert the text in the panel below the button to the previous text if it is not being hovered over
                 }
             }
         });  
@@ -282,6 +288,7 @@ public class Home {
 
         hard.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                difficulty = Difficulty.HARD;
                 easy.setSelected(false); // Ensure that the other two difficulties are de-selected
                 medium.setSelected(false);
                 hard.setSelected(true);
@@ -300,13 +307,13 @@ public class Home {
                     hard.setBackground(Color.RED); // Button color changes
                 }
 
-                previous = difficulty.getText(); // The text in the panel below the button will revert if the mouse stops hovering over the button without selecting it
+                previous = difficultyLabel.getText(); // The text in the panel below the button will revert if the mouse stops hovering over the button without selecting it
                 if (survival.isSelected()) {
-                    difficulty.setText("One Life"); // Text assigned to panel below the button depends on the selected mode
+                    difficultyLabel.setText("One Life"); // Text assigned to panel below the button depends on the selected mode
                 }
                 
                 if (timed.isSelected()) {
-                    difficulty.setText("Twenty Jumbles");
+                    difficultyLabel.setText("Twenty Jumbles");
                 }
             }
             
@@ -314,7 +321,7 @@ public class Home {
             public void mouseExited(MouseEvent evt) {
                 if (!hard.isSelected()) {
                     hard.setBackground(null); // Remove color from button if it is not selected and not being hovered over
-                    difficulty.setText(previous); // Revert the text in the panel below the button to the previous text if it is not being hovered over
+                    difficultyLabel.setText(previous); // Revert the text in the panel below the button to the previous text if it is not being hovered over
                 }
             }
         });
@@ -326,7 +333,7 @@ public class Home {
     
     // Add description of selected difficulty to one row of the home screen. Blank until difficulty selected
     private void addDifficultyDescription(JPanel panel) {
-        panel.add(difficulty);
+        panel.add(difficultyLabel);
     }
     
     // Add dropdown menu of themes to one one row of the home screen
@@ -352,8 +359,13 @@ public class Home {
         	public void actionPerformed(ActionEvent e) {
         		fini();
         		Theme theme = Theme.valueOf((String) themes.getSelectedItem());
-                @SuppressWarnings("unused")
-        		Game game = new Game(window, center, theme);
+                if (mode == Mode.SURVIVAL) {
+                    @SuppressWarnings("unused")
+                    SurvivalGame game = new SurvivalGame(window, center, difficulty, theme);
+                } else {
+                    @SuppressWarnings("unused")
+                    TimedGame game = new TimedGame(window, center, difficulty, theme);
+                }
         	}
         });
         
@@ -389,5 +401,3 @@ public class Home {
         window.revalidate();                               // Validate the home screen layout
 	}
 }
-
-

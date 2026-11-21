@@ -5,18 +5,22 @@ import java.awt.event.*;
 
 public class GameOver {
 
-    JFrame window;   // The application window
-    JPanel center;   // The area within the borders within the window
-    Theme theme;     // The theme selected on the home screen
-    JPanel results1; // The first row in the center panel
-    JPanel results2; // The second row in the center panel
-    JButton retry;   // Button to play again with the same settings
-    JButton home;    // Button to return to the home screen
+    JFrame window;         // The application window
+    JPanel center;         // The area within the borders within the window
+    Mode mode;             // The mode selected on the mode screen
+    Difficulty difficulty; // The difficulty selected on the home screen
+    Theme theme;           // The theme selected on the home screen
+    JPanel results1;       // The first row in the center panel
+    JPanel results2;       // The second row in the center panel
+    JButton retry;         // Button to play again with the same settings
+    JButton home;          // Button to return to the home screen
 
     // Constructor
-    public GameOver(JFrame window, JPanel center, Theme theme) {
+    public GameOver(JFrame window, JPanel center, Mode mode, Difficulty difficulty, Theme theme) {
         this.window = window;
         this.center = center;
+        this.mode = mode;
+        this.difficulty = difficulty;
         this.theme = theme;
         results1 = new JPanel();
         results2 = new JPanel();
@@ -49,14 +53,21 @@ public class GameOver {
     // Add retry button to one row of the game over screen
     private void addRetryButton(JPanel panel) {
 
-        retry = new JButton("Retry");
+        retry.setText("Retry");
+        retry.setFocusable(false);
 
         // Retry button is clicked
         retry.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 fini();
-                @SuppressWarnings("unused")
-                Game game = new Game(window, center, theme); // Switch to the game screen
+                if (mode == Mode.SURVIVAL) { // Switch to a new game screen with the same settings
+                    @SuppressWarnings("unused")
+                    SurvivalGame game = new SurvivalGame(window, center, difficulty, theme);
+                } else { // mode = Mode.TIMED
+                    @SuppressWarnings("unused")
+                    TimedGame game = new TimedGame(window, center, difficulty, theme); 
+                }
+                
             }
         });
         
@@ -66,7 +77,8 @@ public class GameOver {
     // Add home button to one row of the game over screen
     private void addHomeButton(JPanel panel) {
 
-        home = new JButton("Home");
+        home.setText("Home");
+        home.setFocusable(false);
         
         // Home button is clicked
         home.addActionListener(new ActionListener() {
