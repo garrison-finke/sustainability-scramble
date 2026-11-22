@@ -12,7 +12,7 @@ public class TimedGame extends Game {
     private int scramblesRemaining;         // Scrambles remaining counter
 
     // Constructor
-    public TimedGame(JFrame window, JPanel center, Difficulty difficulty, Theme theme) {
+    public TimedGame(JFrame window, JPanel center, Difficulty difficulty, String theme) {
         super(window, center, difficulty, theme);
         timerLabel = new JLabel();
         scramblesRemainingLabel = new JLabel();

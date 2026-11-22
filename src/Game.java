@@ -7,7 +7,7 @@ public class Game {
     protected JFrame window;         // The application window
 	protected JPanel center;         // The area within the borders within the window
     protected Difficulty difficulty; // The difficulty selected on the home screen
-    protected Theme theme;           // The theme selected on the home screen
+    protected String theme;          // The theme selected on the home screen
     protected JPanel game1_1;        // The left side of the first row
     protected JPanel game1_2;        // The right side of the second row
     protected JPanel game1;          // The first row in the center panel
@@ -22,7 +22,7 @@ public class Game {
     protected String word;           // The current word
 	
     // Constructor
-	public Game(JFrame window, JPanel center, Difficulty difficulty, Theme theme) {
+	public Game(JFrame window, JPanel center, Difficulty difficulty, String theme) {
 		this.window = window;
 		this.center = center;
         this.difficulty = difficulty;

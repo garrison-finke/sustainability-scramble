@@ -1,43 +1,45 @@
 
 import java.util.*;
-import java.util.stream.Collectors;
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 
 public class WordBank {
     
-    private ArrayList<String> wordBank; // The collection of words that the game can pick from
+    private List<String> words;
+    private Map<String, String> dictionary; // The collection of words that the game can pick from
     private Random generator;           // Random number generator
     
     public WordBank() {
-        wordBank = new ArrayList<String>();
+        words = new ArrayList<>();
+        dictionary = new HashMap<String, String>();
         generator = new Random();
     }
     
-    public void readWords(Theme theme) {
+    public void readWords(String theme) {
         List<String> lines;
         String path = "/assets/themes/" + theme + ".txt";
         try (InputStream in = getClass().getResourceAsStream(path)) {
             if (in == null) {
-                throw new IllegalArgumentException(path);
+                throw new IllegalArgumentException();
             }
-            BufferedReader reader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8));
-            lines = reader.lines().collect(Collectors.toList());
+            lines = new String(in.readAllBytes(), StandardCharsets.UTF_8).lines().toList();
         } catch (IOException e) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(e);
         }
 
-        for (String word : lines) {
-            wordBank.add(word);
+        for (String line : lines) {
+            String word = line.split("\\|")[0].strip();
+            String definition = line.split("\\|")[1].strip();
+            dictionary.put(word, definition);
         }
+
+        words.addAll(dictionary.keySet());
     }
     
     // Get a word from the word bank
     public String getNext() {
-        return wordBank.get(generator.nextInt(wordBank.size()));
+        return words.get(generator.nextInt(words.size()));
     }
 
     // Get a scramble for a word or phrase

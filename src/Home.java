@@ -5,6 +5,8 @@ import java.awt.event.*;
 
 public class Home {
     
+    private final String[] THEMES = {"Animals", "Renewable Energy", "Trash"};
+
     private JFrame window;            // The application window
     private JPanel center;            // The area within the borders within the window
 	private JPanel home1;             // The first row in the center panel
@@ -339,8 +341,10 @@ public class Home {
     // Add dropdown menu of themes to one one row of the home screen
     private void addThemeDropdown(JPanel panel) {
         panel.add(new JLabel("3) Select Theme: "));
-        themes.addItem("Animals"); // TODO: loop through files in theme folder
         themes.setFocusable(false);
+        for (String theme : THEMES) {
+            themes.addItem(theme);
+        }
         panel.add(themes);
     }
     
@@ -358,7 +362,7 @@ public class Home {
         start.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		fini();
-        		Theme theme = Theme.valueOf((String) themes.getSelectedItem());
+        		String theme = (String) themes.getSelectedItem();
                 if (mode == Mode.SURVIVAL) {
                     @SuppressWarnings("unused")
                     SurvivalGame game = new SurvivalGame(window, center, difficulty, theme);
@@ -380,8 +384,8 @@ public class Home {
         credits.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 fini();
-                //@SuppressWarnings("unused")
-                //Credits credits = new Credits(window, center);
+                @SuppressWarnings("unused")
+                Credits credits = new Credits(window, center);
             }
         });
 

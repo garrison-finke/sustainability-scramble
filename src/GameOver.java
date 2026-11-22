@@ -9,14 +9,14 @@ public class GameOver {
     JPanel center;         // The area within the borders within the window
     Mode mode;             // The mode selected on the mode screen
     Difficulty difficulty; // The difficulty selected on the home screen
-    Theme theme;           // The theme selected on the home screen
+    String theme;           // The theme selected on the home screen
     JPanel results1;       // The first row in the center panel
     JPanel results2;       // The second row in the center panel
     JButton retry;         // Button to play again with the same settings
     JButton home;          // Button to return to the home screen
 
     // Constructor
-    public GameOver(JFrame window, JPanel center, Mode mode, Difficulty difficulty, Theme theme) {
+    public GameOver(JFrame window, JPanel center, Mode mode, Difficulty difficulty, String theme) {
         this.window = window;
         this.center = center;
         this.mode = mode;

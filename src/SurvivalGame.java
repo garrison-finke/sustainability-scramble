@@ -10,7 +10,7 @@ public class SurvivalGame extends Game {
     private int lives;         // Lives counter
 
     // Constructor
-    public SurvivalGame(JFrame window, JPanel center, Difficulty difficulty, Theme theme) {
+    public SurvivalGame(JFrame window, JPanel center, Difficulty difficulty, String theme) {
         super(window, center, difficulty, theme);
         scoreLabel = new JLabel();
         livesLabel = new JLabel();

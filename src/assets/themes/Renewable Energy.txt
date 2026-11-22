@@ -1,0 +1,4 @@
+solar power         | The conversion of energy from sunlight into electricity
+wind power          | Power harnessed or generated from the wind
+hydroelectric power | Power made by the force of water pushing agent a turbine to make a special form of kinetic energy
+geothermal energy   | Heat under the ground used to heat water and make steam to turn generator turbines and make electricity.

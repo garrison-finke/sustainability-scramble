@@ -1,0 +1,3 @@
+trash     | trash definition
+recycling | recycling definition
+compost   | compost definition
