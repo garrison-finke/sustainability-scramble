@@ -6,9 +6,9 @@ import java.nio.charset.StandardCharsets;
 
 public class WordBank {
     
-    private List<String> words;
-    private Map<String, String> dictionary; // The collection of words that the game can pick from
-    private Random generator;           // Random number generator
+    private List<String> words;             // A list of the words that the game can pick from
+    private Map<String, String> dictionary; // The collection of words and their definitions that the game can pick from
+    private Random generator;               // Random number generator
     
     public WordBank() {
         words = new ArrayList<>();
@@ -18,26 +18,23 @@ public class WordBank {
     
     public void readWords(String theme) {
         List<String> lines;
-        String path = "/assets/themes/" + theme + ".txt";
-        try (InputStream in = getClass().getResourceAsStream(path)) {
-            if (in == null) {
-                throw new IllegalArgumentException();
-            }
+        try (InputStream in = getClass().getResourceAsStream("/assets/themes/" + theme + ".txt")) {
+            // Read the credits text file in by bytes and convert its lines to a list of Strings
             lines = new String(in.readAllBytes(), StandardCharsets.UTF_8).lines().toList();
         } catch (IOException e) {
             throw new IllegalArgumentException(e);
         }
 
         for (String line : lines) {
-            String word = line.split("\\|")[0].strip();
-            String definition = line.split("\\|")[1].strip();
-            dictionary.put(word, definition);
+            String word = line.split("\\|")[0].strip();       // Get word from line
+            String definition = line.split("\\|")[1].strip(); // Get definition from line
+            dictionary.put(word, definition);                        // Add word to dictionary
         }
 
         words.addAll(dictionary.keySet());
     }
     
-    // Get a word from the word bank
+    // Get a random word from the word bank
     public String getNext() {
         return words.get(generator.nextInt(words.size()));
     }
@@ -67,5 +64,10 @@ public class WordBank {
         }
         
         return scrambledPhrase.toString();
+    }
+
+    // Get definition of specific word or phrase
+    public String getDefinition(String word) {
+        return dictionary.get(word);
     }
 }

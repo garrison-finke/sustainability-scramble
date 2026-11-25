@@ -1,3 +1,6 @@
+
+// Color data obtained from https://one.stthomas.edu/sites/brand-hub/SitePageModern/248163/brand-colors
+
 public class Colors {
     public static final int BLACK = 0x000000;
     public static final int WHITE = 0xffffff;

@@ -5,98 +5,102 @@ import java.awt.event.*;
 
 public class GameOver {
 
-    JFrame window;         // The application window
-    JPanel center;         // The area within the borders within the window
-    Mode mode;             // The mode selected on the mode screen
-    Difficulty difficulty; // The difficulty selected on the home screen
-    String theme;           // The theme selected on the home screen
-    JPanel results1;       // The first row in the center panel
-    JPanel results2;       // The second row in the center panel
-    JButton retry;         // Button to play again with the same settings
-    JButton home;          // Button to return to the home screen
+    protected JFrame window;           // The application window
+    protected JPanel center;           // The area within the borders of the window
+    protected Difficulty difficulty;   // The difficulty selected on the home screen
+    protected String theme;            // The theme selected on the home screen
+    protected JPanel gameOverPanel;    // Panel for game over
+    protected JPanel performancePanel; // Panel for score or time
+    protected JPanel buttonPanel;      // Panel for retry and home buttons
+    protected JLabel gameOver;         // Game over text
+    protected JLabel performance;      // Text label for score or time
+    protected CustomButton retry;      // Retry button
+    protected CustomButton home;       // Home button
 
     // Constructor
-    public GameOver(JFrame window, JPanel center, Mode mode, Difficulty difficulty, String theme) {
+    public GameOver(JFrame window, JPanel center, Difficulty difficulty, String theme) {
         this.window = window;
         this.center = center;
-        this.mode = mode;
         this.difficulty = difficulty;
         this.theme = theme;
-        results1 = new JPanel();
-        results2 = new JPanel();
-        retry = new JButton();
-        home = new JButton();
+        gameOverPanel = new JPanel();
+        performancePanel = new JPanel();
+        buttonPanel = new JPanel();
+        gameOver = new JLabel();
+        performance = new JLabel();
+        retry = new CustomButton();
+        home = new CustomButton();
         init();
     }
 
     // Initializer
     private void init() {
-        addGameOverMessage(results1); // Add game over message to the first row of the game over screen
-        addRetryButton(results2);     // Add retry button to the second row of the game over screen
-        addHomeButton(results2);      // Add home button to the second row of the game over screen
-        addPanels();                  // Change layout and add rows to the game over screen
-        window.repaint();             // Refresh the game over screen layout
+        createGameOverPanel(); // Create panel with game over text
+        createButtonPanel();   // Create panel with retry and home buttons button
+        addPanels();           // Add subpanels to center panel
+        window.revalidate();   // Validate the window layout 
+        window.repaint();      // Refresh the window layout
     }
 
-    // Finisher
-    private void fini() {
-        center.remove(results1); // Remove first row and its components from the game over screen
-        center.remove(results2); // Remove second row and its components from the game over screen
-        window.repaint();        // Refresh the game over screen layout
+    // Create panel with game over text
+    private void createGameOverPanel() {
+        gameOver.setText("Game Over");                         // Add text to label
+        SustainabilityScramble.setFontAvenir(gameOver, 32.0f); // Set font to Avenir Regular 32 point
+        gameOverPanel.add(gameOver);                                 // Add label to panel
     }
 
-    // Add game over message to one row of the game over screen
-    private void addGameOverMessage(JPanel panel) {
-        panel.add(new JLabel("Game Over"));
+    // Create panel with retry and home buttons button
+    private void createButtonPanel() {
+        addRetryButton();
+        addHomeButton();
     }
-
-    // Add retry button to one row of the game over screen
-    private void addRetryButton(JPanel panel) {
-
-        retry.setText("Retry");
-        retry.setFocusable(false);
-
-        // Retry button is clicked
-        retry.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                fini();
-                if (mode == Mode.SURVIVAL) { // Switch to a new game screen with the same settings
-                    @SuppressWarnings("unused")
-                    SurvivalGame game = new SurvivalGame(window, center, difficulty, theme);
-                } else { // mode = Mode.TIMED
-                    @SuppressWarnings("unused")
-                    TimedGame game = new TimedGame(window, center, difficulty, theme); 
-                }
-                
-            }
-        });
-        
-        panel.add(retry);
+    private void addRetryButton() {
+        retry.setText("Retry"); // Add text to button             
+        buttonPanel.add(retry);       // Add button to panel 
     }
+    private void addHomeButton() {
 
-    // Add home button to one row of the game over screen
-    private void addHomeButton(JPanel panel) {
+        home.setText("Home"); // Add text to button
 
-        home.setText("Home");
-        home.setFocusable(false);
-        
-        // Home button is clicked
+        // Set home button behavior on click
         home.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent e) {
-                fini();
+                center.removeAll();                   // Remove all components from center panel
                 @SuppressWarnings("unused")
                 Home home = new Home(window, center); // Switch to the home screen
             }
         });
 
-        panel.add(home);
-    }
+        home.addMouseListener(new MouseAdapter() {
 
-    // Change layout and add rows to the game over screen
+            // Set home button behavior on hover
+            public void mouseEntered(MouseEvent evt) {
+                if (home.isEnabled()) {
+                    home.setBackground(new Color(Colors.MEDIUM_PURPLE_50)); // Change color to medium purple
+                    home.setFont(SustainabilityScramble.avenirDemi);        // Change font family to Avenir Demi
+                    home.setFont(home.getFont().deriveFont(20.0f));   // Scale new font to 20 point
+                }
+            }
+            
+            // Set home button behavior on cursor exit
+            public void mouseExited(MouseEvent evt) {
+                if (home.isEnabled()) {
+                    home.setBackground(new Color(Colors.WHITE));          // Revert the button color to white
+                    home.setFont(SustainabilityScramble.avenirRegular);   // Revert the font family to Avenir Regular
+                    home.setFont(home.getFont().deriveFont(20.0f)); // Scale new font to 20 point
+                }
+            }
+        });
+
+        buttonPanel.add(home); // Add button to panel
+    }
+    
+    // Add subpanels to center panel
     private void addPanels() {
-        center.setLayout(new GridLayout(2, 1)); // Change the game over screen layout
-        center.add(results1);                              // Add the first row to the game over screen
-        center.add(results2);                              // Add the second row to the game over screen
-        window.revalidate();                               // Validate the game over screen layout
+        center.setLayout(new GridLayout(3, 1)); // Set center panel to 3 by 1 grid layout
+        gameOverPanel.setLayout(new GridBagLayout());      // Set game over panel to grid bag layout
+        center.add(gameOverPanel);                         // Add game over text to first row of game over screen
+        center.add(performancePanel);                      // Add performance text to second row of game over screen
+        center.add(buttonPanel);                           // Add retry and home buttons to third row of game over screen 
     }
 }

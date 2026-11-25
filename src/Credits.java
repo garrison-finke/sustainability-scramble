@@ -9,94 +9,114 @@ import java.nio.charset.StandardCharsets;
 
 public class Credits {
     
-    JFrame window;
-    JPanel center;
+    private JFrame window;       // The application window
+    private JPanel center;       // The area within the borders of the window
+    private JPanel headerPanel;  // Panel for header text located at top of center panel
+    private JPanel creditsPanel; // Panel for credits text located in middle of center panel
+    private JPanel backPanel;    // Panel for back button located at bottom of center panel
+    private JLabel header;       // Header text
+    private JLabel credits;      // Credits text
+    private CustomButton back;   // Back button
 
-    JPanel north;
-    JPanel middle;
-    JPanel south;
-
-    JLabel title;
-    JLabel credits;
-    JButton back;
-
+    // Constructor
     public Credits(JFrame window, JPanel center) {
         this.window = window;
         this.center = center;
-        north = new JPanel();
-        middle = new JPanel();
-        south = new JPanel();
-        title = new JLabel();
+        headerPanel = new JPanel();
+        creditsPanel = new JPanel();
+        backPanel = new JPanel();
+        header = new JLabel();
         credits = new JLabel();
-        back = new JButton();
+        back = new CustomButton();
         init();
     }
 
+    // Initializer
     private void init() {
-        addTitle(north);
-        addCredits(middle);
-        addBackButton(south);
-        addPanels();
-        window.repaint();
+        createHeaderPanel();  // Create panel with header text
+        createCreditsPanel(); // Create panel with credits text
+        createBackPanel();    // Create panel with back button 
+        addPanels();          // Add subpanels to central panel
+        window.revalidate();  // Validate the game screen layout
+        window.repaint();     // Refresh the window layout
     }
 
-    private void fini() {
-        center.remove(north);
-        center.remove(middle);
-        center.remove(south);
-        window.repaint();
+    // Create panel with header text
+    private void createHeaderPanel() {
+        header.setText("Credits");                           // Add text to header
+        SustainabilityScramble.setFontAvenir(header, 32.0f); // Set font to Avenir Regular 32 point
+        headerPanel.add(header);                                   // Add header to panel
     }
 
-    private void addTitle(JPanel panel) {
-        title.setText("Credits");
-        panel.add(title);
-    }
+    // Create panel with credits text
+    private void createCreditsPanel() {
 
-    private void addCredits(JPanel panel) {
+        SustainabilityScramble.setFontAvenir(credits, 16.0f);                              // Set font to Avenir Regular 16 point
+        credits.setBorder(BorderFactory.createEmptyBorder(4, 0, 4, 0)); // Add extra space to bottom of text to prevent cutting
 
         List<String> lines;
-        String path = "/assets/Credits.txt";
-        try (InputStream in = getClass().getResourceAsStream(path)) {
-            if (in == null) {
-                throw new IllegalArgumentException();
-            }
+        try (InputStream in = getClass().getResourceAsStream("/assets/Credits.txt")) {
+            // Read the credits text file in by bytes and convert its lines to a list of Strings
             lines = new String(in.readAllBytes(), StandardCharsets.UTF_8).lines().toList();
-        } catch (IOException e) {
-            throw new IllegalArgumentException(e);
+        } catch (NullPointerException | IOException e) {
+            throw new IllegalArgumentException();
         }
 
+        // Add all lines to a single String of HTML
         StringBuilder creditsText = new StringBuilder("<html>");
         for (String line : lines) {
-            creditsText.append(line);
-            creditsText.append("<br>");
+            creditsText.append(line);        // Add line
+            creditsText.append("<br>"); // Add line break
         }
         creditsText.append("</html>");
-        credits.setText(creditsText.toString());
+        credits.setText(creditsText.toString()); // Add text to label
 
-        panel.add(credits);
+        creditsPanel.add(credits); // Add label to panel
     }
 
-    private void addBackButton(JPanel panel) {
+    // Create panel with back button
+    private void createBackPanel() {
 
-        back.setText("Back");
-        back.setFocusable(false);
+        back.setText("Back"); // Add text to button
 
+        // Set back button behavior on click
         back.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                fini();
+                center.removeAll();                   // Remove all components from center panel
                 @SuppressWarnings("unused")
-                Home home = new Home(window, center); // Switch to the home screen
+                Home home = new Home(window, center); // Switch to home screen
             }
         });
-        
-        panel.add(back);
+
+        back.addMouseListener(new MouseAdapter() {
+
+            // Set back button behavior on hover
+            public void mouseEntered(MouseEvent evt) {
+                if (back.isEnabled()) {
+                    back.setBackground(new Color(Colors.MEDIUM_PURPLE_50)); // Change color to medium purple
+                    back.setFont(SustainabilityScramble.avenirDemi);        // Change font family to Avenir Demi
+                    back.setFont(back.getFont().deriveFont(20.0f));   // Scale new font to 20 point
+                }
+            }
+            
+            // Set back button behavior on cursor exit
+            public void mouseExited(MouseEvent evt) {
+                if (back.isEnabled()) {
+                    back.setBackground(new Color(Colors.WHITE));          // Revert the button color to white
+                    back.setFont(SustainabilityScramble.avenirRegular);   // Revert the font family to Avenir Regular
+                    back.setFont(back.getFont().deriveFont(20.0f)); // Scale new font to 20 point
+                }
+            }
+        });
+
+        backPanel.add(back); // Add button to panel
     }
 
+    // Add subpanels to central panel
     private void addPanels() {
-        center.setLayout(new BorderLayout());
-        center.add(north, BorderLayout.NORTH);
-        center.add(middle, BorderLayout.CENTER);
-        center.add(south, BorderLayout.SOUTH);
-        window.revalidate();
+        center.setLayout(new BorderLayout());          // Set center panel to a border layout
+        center.add(headerPanel, BorderLayout.NORTH);   // Add header text to top of center panel 
+        center.add(creditsPanel, BorderLayout.CENTER); // Add credits text to middle of center panel
+        center.add(backPanel, BorderLayout.SOUTH);     // Add back button to bottom of center panel
     }
 }

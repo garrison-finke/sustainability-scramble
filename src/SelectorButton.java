@@ -1,19 +1,18 @@
-import javax.swing.JButton;
 
-public class SelectorButton extends JButton {
+import java.awt.*;
+
+public class SelectorButton extends CustomButton {
     
-    private boolean selected = false; // Whether the option associated with the button is selected or not
+    private boolean selected = false; // Whether the button is selected
     
     public SelectorButton() {
         super();
-        this.setFocusable(false);
     }
     
-    // 
     public void setSelected(boolean selected) {
         this.selected = selected;
         if (!selected) {
-            setBackground(null);
+            setBackground(new Color(Colors.WHITE));
         }
     }
     
