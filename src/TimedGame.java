@@ -62,7 +62,6 @@ public class TimedGame extends Game {
                     feedback.setForeground(new Color(0x00C800));                              // Set feedback color to green
                     previousWord.setText(currentWord);                                             // Show solution 
                     definition.setText("<html><div style='width: 500px; text-align: center;'>" + wordBank.getDefinition(currentWord) + "</div></html>"); // Show definition
-                    SustainabilityScramble.setFontAvenir(definition, 24.0f); // Set font to Avenir Regular 24 point
                     showNextScramble();
                 } else {
                     feedback.setText("Incorrect");                                            // Update feedback
@@ -70,7 +69,6 @@ public class TimedGame extends Game {
                     previousWord.setText("");                                                 // Clear previous solution
                     if (hintsOn) {
                         definition.setText("<html><div style='width: 500px; text-align: center;'> Hint: " + wordBank.getDefinition(currentWord) + "</div></html>"); // Show definition
-                    SustainabilityScramble.setFontAvenir(definition, 24.0f); // Set font to Avenir Regular 24 point
                     } else {
                         definition.setText("");
                     }
@@ -188,7 +186,6 @@ public class TimedGame extends Game {
                     hints.setText("Hints: ON");                                       // Update button text
                     if (feedback.getText() == "Incorrect") {
                         definition.setText("<html><div style='width: 500px; text-align: center;'>" + wordBank.getDefinition(currentWord) + "</div></html>"); // Show definition
-                        SustainabilityScramble.setFontAvenir(definition, 24.0f); // Set font to Avenir Regular 24 point
                     }
                 } else {
                     hints.setText("Hints: OFF");

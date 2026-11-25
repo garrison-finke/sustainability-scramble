@@ -108,8 +108,9 @@ public class Game {
 
     // Create panel with definition
     protected void createDefinitionPanel() {
-        SustainabilityScramble.setFontAvenir(definition, 24.0f); // Set font to Avenir Regular 24 point
-        definitionPanel.add(definition);                               // Add label to panel
+        definition.putClientProperty(JEditorPane.HONOR_DISPLAY_PROPERTIES, Boolean.TRUE); // Make sure font applies to HTML strings
+        SustainabilityScramble.setFontAvenir(definition, 24.0f);                    // Set font to Avenir Regular 24 point
+        definitionPanel.add(definition);                                                  // Add label to panel
     }
 
     // Add subpanels to central panel
