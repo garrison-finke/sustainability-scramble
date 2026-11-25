@@ -1,5 +1,7 @@
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+
 import java.awt.*;
 
 public class Game {
@@ -106,9 +108,8 @@ public class Game {
 
     // Create panel with definition
     protected void createDefinitionPanel() {
-        SustainabilityScramble.setFontAvenir(definition, 24.0f);                              // Set font to Avenir Regular 24 point
-        definition.setBorder(BorderFactory.createEmptyBorder(4, 0, 4, 0)); // Add extra space to bottom of text to prevent cutting
-        definitionPanel.add(definition);
+        SustainabilityScramble.setFontAvenir(definition, 24.0f); // Set font to Avenir Regular 24 point
+        definitionPanel.add(definition);                               // Add label to panel
     }
 
     // Add subpanels to central panel

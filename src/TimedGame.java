@@ -61,14 +61,16 @@ public class TimedGame extends Game {
                     feedback.setText("Correct!");                                            // Update feedback
                     feedback.setForeground(new Color(0x00C800));                              // Set feedback color to green
                     previousWord.setText(currentWord);                                             // Show solution 
-                    definition.setText(wordBank.getDefinition(currentWord));                       // Show definition
+                    definition.setText("<html><div style='width: 500px; text-align: center;'>" + wordBank.getDefinition(currentWord) + "</div></html>"); // Show definition
+                    SustainabilityScramble.setFontAvenir(definition, 24.0f); // Set font to Avenir Regular 24 point
                     showNextScramble();
                 } else {
                     feedback.setText("Incorrect");                                            // Update feedback
                     feedback.setForeground(Color.RED);                                              // Set feedback color to red
                     previousWord.setText("");                                                 // Clear previous solution
                     if (hintsOn) {
-                        definition.setText("Hint: " + wordBank.getDefinition(currentWord));         // Show hint
+                        definition.setText("<html><div style='width: 500px; text-align: center;'> Hint: " + wordBank.getDefinition(currentWord) + "</div></html>"); // Show definition
+                    SustainabilityScramble.setFontAvenir(definition, 24.0f); // Set font to Avenir Regular 24 point
                     } else {
                         definition.setText("");
                     }
@@ -185,7 +187,8 @@ public class TimedGame extends Game {
                 if (hintsOn) {
                     hints.setText("Hints: ON");                                       // Update button text
                     if (feedback.getText() == "Incorrect") {
-                        definition.setText("Hint: " + wordBank.getDefinition(currentWord)); // Show hint
+                        definition.setText("<html><div style='width: 500px; text-align: center;'>" + wordBank.getDefinition(currentWord) + "</div></html>"); // Show definition
+                        SustainabilityScramble.setFontAvenir(definition, 24.0f); // Set font to Avenir Regular 24 point
                     }
                 } else {
                     hints.setText("Hints: OFF");

@@ -44,6 +44,7 @@ public class SurvivalGame extends Game {
                     feedback.setForeground(new Color(0x00C800)); // Set feedback color to green
                     previousWord.setText(currentWord);                // Show solution 
                     definition.setText("<html><div style='width: 500px; text-align: center;'>" + wordBank.getDefinition(currentWord) + "</div></html>"); // Show definition
+                    SustainabilityScramble.setFontAvenir(definition, 24.0f); // Set font to Avenir Regular 24 point
                     definition.revalidate();
                     definition.repaint();
                 } else {                         // Incorrect answer
@@ -53,6 +54,7 @@ public class SurvivalGame extends Game {
                     feedback.setForeground(Color.RED);                 // Set color to red 
                     previousWord.setText("Solution: " + currentWord); // Show solution
                     definition.setText("<html><div style='width: 500px; text-align: center;'>" + wordBank.getDefinition(currentWord) + "</div></html>"); // Show definition
+                    SustainabilityScramble.setFontAvenir(definition, 24.0f); // Set font to Avenir Regular 24 point
                     definition.revalidate();
                     definition.repaint();
                 }
